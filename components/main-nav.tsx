@@ -2,73 +2,74 @@
 
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { useParams, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
+
+// Definimos las props que ahora incluyen storeId
+interface MainNavProps extends React.HTMLAttributes<HTMLElement> {
+    storeId: string;
+}
 
 export function MainNav({
     className,
+    storeId, // Recibimos storeId desde las props
     ...props
-}:React.HTMLAttributes<HTMLElement>){  
+}: MainNavProps){  
     const pathname = usePathname();
-    const params = useParams();
-
+    // Ya no necesitamos useParams()
 
     const routes = [
        {
-          href : `/${params.storeId}`,
+          href : `/${storeId}`,
           label:'Vista Previa',
-          active: pathname === `/${params.storeId}`,
-
+          active: pathname === `/${storeId}`,
         },
         {
-          href : `/${params.storeId}/billboards`,
+          href : `/${storeId}/billboards`,
           label:'Carteles',
-          active: pathname === `/${params.storeId}/billboards`,
-
+          active: pathname === `/${storeId}/billboards`,
         },
         {
-          href : `/${params.storeId}/categories`,
+          href : `/${storeId}/categories`,
           label:'Categorias',
-          active: pathname === `/${params.storeId}/categories`,
-
+          active: pathname === `/${storeId}/categories`,
         },
         {
-          href : `/${params.storeId}/sizes`,
+          href : `/${storeId}/sizes`,
           label:'Talles',
-          active: pathname === `/${params.storeId}/sizes`,
-
+          active: pathname === `/${storeId}/sizes`,
         },
         {
-          href : `/${params.storeId}/colors`,
+          href : `/${storeId}/colors`,
           label:'Colores',
-          active: pathname === `/${params.storeId}/colors`,
-
+          active: pathname === `/${storeId}/colors`,
         },
         {
-          href : `/${params.storeId}/products`,
+          href : `/${storeId}/products`,
           label:'Productos',
-          active: pathname === `/${params.storeId}/products`,
-
+          active: pathname === `/${storeId}/products`,
+        },
+        // Aquí puedes agregar la ruta de transacciones que te sugerí antes
+        {
+          href : `/${storeId}/transactions`,
+          label:'Transacciones',
+          active: pathname === `/${storeId}/transactions`,
         },
         {
-          href : `/${params.storeId}/orders`,
-          label:'Ordenes',
-          active: pathname === `/${params.storeId}/orders`,
-
-        },
-        {
-          href : `/${params.storeId}/settings`,
+          href : `/${storeId}/settings`,
           label:'Configuracion',
-          active: pathname === `/${params.storeId}/settings`,
-
+          active: pathname === `/${storeId}/settings`,
         },
-
     ];
+
     return(
         <nav className={cn("flex items-center space-x-4 lg:space-x-6", className)}>
           {routes.map((route) =>(
-            <Link key={route.href} href={route.href} className={cn("text-sm font-medium transition-colors hover:text-primary", route.active ? "text-black dark:text-white":"text-muted-foreground")}
+            <Link 
+              key={route.href} 
+              href={route.href} 
+              className={cn("text-sm font-medium transition-colors hover:text-primary", route.active ? "text-black dark:text-white":"text-muted-foreground")}
             >
-            {route.label}
+              {route.label}
             </Link>
           ))}
         </nav>
